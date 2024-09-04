@@ -1,0 +1,23 @@
+﻿@model Department
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update Department @Model.CreatedAt</h1>
+
+<form asp-action="Update">
+    <div class="form-group">
+        <label asp-for="Code">Code</label>
+        <input type="text" class="form-control" asp-for="Code" placeholder="Enter Department Code">
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input type="text" class="form-control" asp-for="Name" placeholder="Enter Department Name">
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-primary"></input>
+    <a asp-action="Index" class="btn btn-dark">Back</a>
+
+</form>

@@ -1,0 +1,26 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="Profile Image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text"><strong>Age:</strong> @Model.Age</p>
+                    <p class="card-text"><strong>Address:</strong> @Model.Address</p>
+                    <p class="card-text"><strong>Email:</strong> <a href="mailto:@Model.Email">@Model.Email</a></p>
+                    <p class="card-text"><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+                    <p class="card-text"><strong>Hiring Date:</strong> @Model.HirirngDate.ToString("MMMM dd, yyyy")</p>
+                    <p class="card-text"><strong>Salary:</strong> $@Model.Salary.ToString("F2")</p>
+                    <p class="card-text"><strong>Department ID:</strong> @(Model.DepartmentId.HasValue ? Model.DepartmentId.ToString() : "Not Assigned")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
