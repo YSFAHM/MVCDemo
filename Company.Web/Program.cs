@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Company.Web
 {
+    //Hello
     public class Program
     {
         public static void Main(string[] args)
