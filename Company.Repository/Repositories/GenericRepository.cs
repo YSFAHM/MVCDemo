@@ -11,7 +11,7 @@ namespace Company.Repository.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        private readonly CompanyDbContext _context;
+        protected readonly CompanyDbContext _context;
         public GenericRepository(CompanyDbContext context)
         {
             _context = context;

@@ -13,6 +13,8 @@ namespace Company.Data.Contexts.Configurations
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
+            builder.ToTable("Employees");
+            builder.HasOne<Department>(e=>e.Department).WithMany(d=>d.Employees).HasForeignKey(e=>e.DepartmentId).OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

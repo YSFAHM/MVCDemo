@@ -2,54 +2,58 @@
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
 using Company.Data.Entities;
+using AutoMapper;
+using Company.Service.Dtos;
 namespace Company.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DepartmentService(IUnitOfWork unitOfWork)
+        public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(Department entity)
+        public void Add(DepartmentDto departmentDto)
         {
-            var mappedDepartment = new Department
-            {
-                Code = entity.Code,
-                Name = entity.Name,
-                CreatedAt = DateTime.Now,
-            };
+            var mappedDepartment = _mapper.Map<Department>(departmentDto);
+            mappedDepartment.CreatedAt = DateTime.Now;
             _unitOfWork.DepartmentRepository.Add(mappedDepartment);
             _unitOfWork.Complete();
         }
 
-        public void Delete(Department entity)
+        public void Delete(int id)
         {
-            _unitOfWork.DepartmentRepository.Delete(entity);
+            var department = _unitOfWork.DepartmentRepository.GetById(id);
+            _unitOfWork.DepartmentRepository.Delete(department);
             _unitOfWork.Complete();
         }
 
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<DepartmentDto> GetAll()
         {
             var departments = _unitOfWork.DepartmentRepository.GetAll();
-            return departments;
+            var departmentsDtos = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentDto>>(departments);
+            return departmentsDtos;
         }
 
-        public Department GetById(int id)
+        public DepartmentDto GetById(int id)
         {
             var department = _unitOfWork.DepartmentRepository.GetById(id);
-            return department;
+            var departmentDto = _mapper.Map<DepartmentDto>(department);
+            return departmentDto;
         }
 
-        public void Update(Department entity)
+        public void Update(DepartmentDto departmentDto)
         {
-            var department = _unitOfWork.DepartmentRepository.GetById(entity.Id);
-            department.Name = entity.Name;
-            department.Code = entity.Code;
+            
+            var department = _unitOfWork.DepartmentRepository.GetById(departmentDto.Id);
+            department.Name = departmentDto.Name;
+            department.Code = departmentDto.Code;
             _unitOfWork.DepartmentRepository.Update(department);
+
             _unitOfWork.Complete();
         }
 

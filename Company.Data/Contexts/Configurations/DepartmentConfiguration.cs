@@ -13,6 +13,7 @@ namespace Company.Data.Contexts.Configurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
+            builder.ToTable("Departments");
             builder.HasIndex(d => d.Name).IsUnique();
         }
     }

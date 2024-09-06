@@ -15,5 +15,11 @@ namespace Company.Repository.Repositories
         public EmployeeRepository(CompanyDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<Employee> GetEmployeesByName(string name)
+        {
+            var employees = _context.Employees.Where(x => x.Name.Trim().ToLower().Contains(name.Trim().ToLower()));
+            return employees;
+        }
     }
 }

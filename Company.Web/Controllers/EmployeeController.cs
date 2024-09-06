@@ -1,4 +1,5 @@
 ﻿using Company.Data.Entities;
+using Company.Service.Dtos;
 using Company.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,35 +15,46 @@ namespace Company.Web.Controllers
             _employeeService = employeeService;
             _departmentService = departmentService;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string? searchInp)
         {
-            var employees = _employeeService.GetAll();
-            return View(employees);
+            IEnumerable<EmployeeDto> employeesDtos = new List<EmployeeDto>();
+            if(string.IsNullOrEmpty(searchInp))
+            {
+                employeesDtos = _employeeService.GetAll();
+            }
+            else
+            {
+                employeesDtos = _employeeService.GetEmployeesByName(searchInp);
+                
+            }
+            return View(employeesDtos);
+
         }
 
         public IActionResult Details(int? id)
         {
             if (id is null) return View("NotFound");
-            var employee = _employeeService.GetById(id.Value);
-            if (employee is null) return View("NotFound");
-            return View(employee);
+            var employeeDto = _employeeService.GetById(id.Value);
+            if (employeeDto is null) return View("NotFound");
+            return View(employeeDto);
         }
 
         public IActionResult Create()
         {
-            TempData["Departments"] = _departmentService.GetAll();
+            ViewBag.Departments = _departmentService.GetAll();
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Create(EmployeeDto employeeDto)
         {
             
             if (ModelState.IsValid)
             {
-                _employeeService.Add(employee);
+                _employeeService.Add(employeeDto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return View(employeeDto);
         }
 
         public IActionResult Delete(int? id)
@@ -51,13 +63,7 @@ namespace Company.Web.Controllers
             {
                 return View("NotFound");
             }
-
-            var employee = _employeeService.GetById(id.Value);
-            if (employee == null)
-            {
-                return View("NotFound");
-            }
-            _employeeService.Delete(employee);
+            _employeeService.Delete(id.Value);
             return RedirectToAction(nameof(Index));
         }
 
@@ -67,17 +73,17 @@ namespace Company.Web.Controllers
             var employee = _employeeService.GetById(id.Value);
             if (employee is null) return View("NotFound");
 
-            TempData["Departments"] = _departmentService.GetAll();
+            ViewBag.Departments = _departmentService.GetAll();
             return View(employee);
         }
         [HttpPost]
-        public IActionResult Update(int? id ,Employee employee)
+        public IActionResult Update(int? id ,EmployeeDto employeeDto)
         {
-            if (employee.Id != id.Value)
+            if (employeeDto.Id != id.Value)
             {
                 return View("NotFound");
             }
-            _employeeService.Update(employee);
+            _employeeService.Update(employeeDto);
             return RedirectToAction(nameof(Index));
         }
     }

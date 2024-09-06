@@ -1,13 +1,15 @@
-﻿@model Employee
+﻿@model EmployeeDto
 @{
     ViewData["Title"] = "Update";
-    IEnumerable<Department> departments = (IEnumerable<Department>)TempData["Departments"];
+
+    var deps = new SelectList(ViewBag.Departments, nameof(Department.Id), nameof(Department.Name));
 }
+
 
 
 <div class="container mt-5">
     <h2>Update Profile</h2>
-    <form asp-action="Update">
+    <form asp-action="Update" enctype="multipart/form-data">
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control" required>
@@ -38,18 +40,15 @@
         </div>
         <div class="mb-3">
             <label asp-for="DepartmentId" class="form-label">Department</label>
-            <select asp-for="DepartmentId" class="form-select">
+            <select asp-items="@deps" asp-for="DepartmentId" class="form-select">
                 <option value="">Select Department</option>
-                @foreach (var department in departments)
-                {
-                    <option value="@department.Id">@department.Name</option>
-                }
+
             </select>
         </div>
-        @*         <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" type="file" accept="image/*">
-        </div> *@
+        <div class="mb-3">
+            <label asp-for="Image" class="form-label"></label>
+            <input asp-for="Image" class="form-control" type="file" accept="image/*">
+        </div>
         <button type="submit" class="btn btn-primary">Update Profile</button>
         <a asp-action="Index" class="btn btn-primary">Return</a>
     </form>

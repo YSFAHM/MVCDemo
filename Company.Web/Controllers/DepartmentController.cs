@@ -1,5 +1,6 @@
 ﻿using Company.Data.Entities;
 using Company.Repository.Interfaces;
+using Company.Service.Dtos;
 using Company.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -16,8 +17,8 @@ namespace Company.Web.Controllers
         }
         public IActionResult Index()
         {
-            var departments = _departmentService.GetAll();
-            return View(departments);
+            var departmentsDtos = _departmentService.GetAll();
+            return View(departmentsDtos);
         }
 
         [HttpGet]
@@ -27,14 +28,14 @@ namespace Company.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(DepartmentDto departmentDto)
         {
             if(ModelState.IsValid)
             {
-                _departmentService.Add(department);
+                _departmentService.Add(departmentDto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(departmentDto);
         }
 
         public IActionResult Details(int? id,string viewName ="Details")
@@ -45,13 +46,13 @@ namespace Company.Web.Controllers
                 return View("NotFound");
             }
 
-            var department = _departmentService.GetById(id.Value);
-            if (department == null)
+            var departmentDto = _departmentService.GetById(id.Value);
+            if (departmentDto == null)
             {
                 return View("NotFound");
             }
 
-            return View(viewName,department);
+            return View(viewName,departmentDto);
 
         }
 
@@ -61,13 +62,13 @@ namespace Company.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int? id, Department department)
+        public IActionResult Update(int? id, DepartmentDto departmentDto)
         {
-            if(department.Id != id.Value)
+            if(departmentDto.Id != id.Value)
             {
                 return View("NotFound");
             }
-            _departmentService.Update(department);
+            _departmentService.Update(departmentDto);
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,12 +79,7 @@ namespace Company.Web.Controllers
                 return View("NotFound");
             }
 
-            var department = _departmentService.GetById(id.Value);
-            if (department == null)
-            {
-                return View("NotFound");
-            }
-            _departmentService.Delete(department);
+            _departmentService.Delete(id.Value);
             return RedirectToAction(nameof(Index));
         }
 
