@@ -26,6 +26,7 @@ namespace Company.Service.Services
         {
             employeeDto.ImageUrl = DocumentSettings.UploadFile(employeeDto.Image, "Images");
             var mappedEmployee = _mapper.Map<Employee>(employeeDto);
+            mappedEmployee.CreatedAt = DateTime.Now;
 
             _unitOfWork.EmployeeRepository.Add(mappedEmployee);
             _unitOfWork.Complete();

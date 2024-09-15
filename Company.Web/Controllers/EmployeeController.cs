@@ -54,6 +54,7 @@ namespace Company.Web.Controllers
                 _employeeService.Add(employeeDto);
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Departments = _departmentService.GetAll();
             return View(employeeDto);
         }
 
