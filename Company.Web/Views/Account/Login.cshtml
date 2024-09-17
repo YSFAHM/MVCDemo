@@ -1,0 +1,53 @@
+﻿@model LoginViewModel;
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Login Form</h3>
+<form asp-action="Login">
+    <div asp-validation-summary="All"></div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4 pb-2">
+
+            <div data-mdb-input-init class="form-outline">
+                <input type="email" asp-for="Email" class="form-control form-control-lg" />
+                <label class="form-label" asp-for="Email">Email</label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 mb-4 pb-2">
+
+            <div data-mdb-input-init class="form-outline">
+                <input type="password" asp-for="Password" class="form-control form-control-lg" />
+                <label class="form-label" asp-for="Password">Password</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4 pb-2">
+            <div data-mdb-input-init class="form-outline">
+                <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
+                <label asp-for="RememberMe" class="form-check-label">Remember Me ?</label>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mt-4 pt-2">
+        <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Submit" />
+    </div>
+
+    <div class="mt-4 pt-2">
+        <p>Forget Password ? <a asp-action="ForgetPassword">Forget Password !</a></p>
+    </div>
+
+</form>
