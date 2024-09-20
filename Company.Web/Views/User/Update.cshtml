@@ -1,0 +1,20 @@
+﻿@model ApplicationUserUpdateViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update User @Model.UserName</h1>
+
+<form asp-action="Update">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="UserName">UserName</label>
+        <input type="text" class="form-control" asp-for="UserName" placeholder="Enter UserName">
+        <input type="hidden" asp-for="Id" />
+    </div>
+
+
+    <input type="submit" value="Save" class="btn btn-primary">
+    <a asp-action="Index" class="btn btn-dark">Back</a>
+
+</form>

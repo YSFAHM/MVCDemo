@@ -1,0 +1,35 @@
+﻿@model IdentityRole
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>Show Role @Model.Name</h2>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <strong>Id:</strong>
+                </div>
+                <div class="col-sm-9">
+                    @Model.Id
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <strong>Name:</strong>
+                </div>
+                <div class="col-sm-9">
+                    @Model.Name
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a asp-action="AddOrRemoveUser" class="btn btn-danger">AddOrRemoveUser</a>
+            <a asp-action="Index" class="btn btn-primary">Return</a>
+        </div>
+    </div>
+</div>
