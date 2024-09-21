@@ -8,8 +8,8 @@
 <form asp-action="Update">
     <div asp-validation-summary="All"></div>
     <partial name="PartialViews\CreateEditPartialView" model="@Model" />
-
-    <input type="submit" value="Create" class="btn btn-primary">
+    <a asp-action="AddOrRemoveUsers" asp-route-roleid = "@Model.Id" class="btn btn-danger">Add Or Remove Users</a>
+    <input type="submit" value="Update" class="btn btn-primary">
     <a asp-action="Index" class="btn btn-dark">Back</a>
 
 </form>

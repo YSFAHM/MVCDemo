@@ -22,6 +22,7 @@ namespace Company.Web.Controllers
         #region SignUp
         public IActionResult SignUp()
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -61,6 +62,7 @@ namespace Company.Web.Controllers
         #region Login
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -156,6 +158,11 @@ namespace Company.Web.Controllers
                 }
             }
             return View(input);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
     }

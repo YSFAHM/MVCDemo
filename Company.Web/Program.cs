@@ -72,6 +72,25 @@ namespace Company.Web
             }
 
             app.UseHttpsRedirection();
+
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error/500"); // For general server errors
+                app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
+            //app.UseStatusCodePages(async context =>
+            //{
+            //    if (context.HttpContext.Response.StatusCode == 404)
+            //    {
+            //        context.HttpContext.Response.Redirect("/Error/404");
+            //    }
+            //});
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -80,9 +99,10 @@ namespace Company.Web
 
             app.UseAuthorization();
 
+            // keep in mind that cause an error when we try to update id
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=SignUp}");
+                pattern: "{controller=Account}/{action=SignUp}/{id?}");
 
             app.Run();
 
